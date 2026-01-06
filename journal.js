@@ -66,28 +66,26 @@ function saveEntry() {
 }
 
 // 渲染拼圖板
+// script.js 裡面的 renderPuzzle 函式
 function renderPuzzle() {
-    const board = document.getElementById('puzzleBoard');
-    board.innerHTML = "";
     const savedData = JSON.parse(localStorage.getItem('gratitudeJournal')) || {};
     let completedCount = 0;
 
-    for (let i = 1; i <= totalDays; i++) {
-        const piece = document.createElement('div');
-        piece.classList.add('puzzle-piece');
-        
+    for (let i = 1; i <= 7; i++) {
+        const piece = document.getElementById(`piece-${i}`);
         if (savedData[i]) {
             piece.classList.add('unlocked');
-            piece.innerText = quoteWords[i-1]; // 顯示名言的一部分
             completedCount++;
         } else {
-            piece.innerText = "?";
+            piece.classList.remove('unlocked');
         }
-        board.appendChild(piece);
     }
 
+    if (completedCount === 7) {
+        document.getElementById('quoteDisplay').style.display = "block";
+    }
+}
     // 如果 7 天都完成了，顯示完整名言
     if (completedCount === totalDays) {
         document.getElementById('quoteDisplay').style.display = "block";
     }
-}
