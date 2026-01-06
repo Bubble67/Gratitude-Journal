@@ -175,7 +175,7 @@ function activateDevMode() {
 
     let debugData = {};
     for (let i = 1; i <= 7; i++) {
-        debugData[i] = "這是開發者模式生成的測試感恩內容！✨";
+        debugData[i] = "這裡是開發者留下的一些話";
     }
 
     // 2. 存入 localStorage
@@ -193,5 +193,5 @@ function activateDevMode() {
         fireworkCelebration();
     }
 
-    alert("🛠️ 開發者模式：已完成所有天數並解鎖拼圖！");
+    alert("🛠️ 開發者的小彩蛋：感恩你走到了這裡！");
 }

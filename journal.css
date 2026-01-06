@@ -154,4 +154,78 @@ textarea {
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
+/*換行 */
+textarea#journalInput {
+    white-space: pre-wrap; 
+}
+
+.journal-content-display {
+    white-space: pre-wrap;
+    word-wrap: break-word; 
+}
+
+/* --- 手機版 RWD 調整 --- */
+@media (max-width: 798px) {
+    body {
+        padding: 10px; /* 縮小邊界 */
+    }
+
+    .container {
+        padding: 20px 15px; /* 縮小容器內距 */
+    }
+
+    h1 {
+        font-size: 1.5rem; /* 標題稍微縮小 */
+    }
+
+    /*  調整拼圖大小：從 100px 縮小到 80px */
+    .puzzle-board {
+        grid-template-columns: repeat(4, 80px); 
+        grid-template-rows: repeat(2, 80px);
+        gap: 5px;
+    }
+
+    .piece {
+        width: 80px;
+        height: 80px;
+        background-size: 320px 160px; /* 調整背景圖片大小 */
+    }
+
+    /* 重新計算每一塊縮小後的背景座標 */
+    #piece-1.unlocked { background-position: 0 0; }
+    #piece-2.unlocked { background-position: -80px 0; }
+    #piece-3.unlocked { background-position: -160px 0; }
+    #piece-4.unlocked { background-position: -240px 0; }
+    #piece-5.unlocked { background-position: 0 -80px; }
+    #piece-6.unlocked { background-position: -80px -80px; }
+    #piece-7.unlocked { background-position: -160px -80px; }
+    #piece-8.unlocked { background-position: -240px -80px; }
+
+    /* 天數按鈕換行：讓按鈕在手機上不會擠成一團 */
+    .day-selector {
+        display: flex;
+        flex-wrap: wrap; /* 自動換行 */
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .day-selector button {
+        flex: 1 1 60px; 
+        margin: 0;
+        padding: 10px 5px;
+        font-size: 0.9rem;
+    }
+
+    /* 輸入框調整 */
+    textarea {
+        width: 100%;
+        font-size: 1rem; 
+    }
+
+    .save-btn {
+        width: 100%; 
+        padding: 15px;
+    }
+}
+
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
