@@ -37,7 +37,7 @@ body {
 }
 
 .piece.unlocked {
-    background-image: url('puzzle.png'); /* 請確保檔名一致 */
+    background-image: url('puzzle(1).png'); 
     background-repeat: no-repeat;
     background-color: transparent;
     border: none;

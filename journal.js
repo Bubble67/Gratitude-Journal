@@ -1,5 +1,6 @@
 let currentDay = 1;
 const totalDays = 7;
+const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
 
 const dayPrompts = {
     1: "感恩今天幫你最多的物品！",
@@ -14,60 +15,7 @@ const dayPrompts = {
 window.onload = function() {
     renderPuzzle();
     selectDay(1);
-};
-
-function selectDay(day) {
-    currentDay = day;
-    document.getElementById('currentDayTitle').innerText = `正在完成：本週第 ${day} 篇感恩日記`;
-    
-    const promptText = dayPrompts[day] || "回想今日值得感恩的人事物！";
-    document.getElementById('promptDisplay').innerText = `第${day}天：${promptText}`;
-
-    const savedData = JSON.parse(localStorage.getItem('gratitudeJournal')) || {};
-    document.getElementById('journalInput').value = savedData[day] || "";
-}
-
-function saveEntry() {
-    const text = document.getElementById('journalInput').value.trim();
-    if (!text) {
-        alert("請寫下一些感恩的話吧！");
-        return;
-    }
-
-    let savedData = JSON.parse(localStorage.getItem('gratitudeJournal')) || {};
-    savedData[currentDay] = text;
-    localStorage.setItem('gratitudeJournal', JSON.stringify(savedData));
-
-    alert(`第 ${currentDay} 天的拼圖已解鎖！`);
-    renderPuzzle();
-}
-
-function renderPuzzle() {
-    const savedData = JSON.parse(localStorage.getItem('gratitudeJournal')) || {};
-    let completedCount = 0;
-
-    for (let i = 1; i <= totalDays; i++) {
-        const piece = document.getElementById(`piece-${i}`);
-        if (savedData[i]) {
-            piece.classList.add('unlocked');
-            completedCount++;
-        } else {
-            piece.classList.remove('unlocked');
-        }
-    }
-
-    // 當 7 天都完成時顯示名言
-    if (completedCount === totalDays) {
-        document.getElementById('quoteDisplay').style.display = "block";
-    }
-}
-
-const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000; // 24小時的毫秒數
-
-window.onload = function() {
-    renderPuzzle();
-    selectDay(1);
-    checkTimer(); // 檢查是否可以撰寫
+    checkTimer(); 
 };
 
 function selectDay(day) {
@@ -78,13 +26,22 @@ function selectDay(day) {
 
     const savedData = JSON.parse(localStorage.getItem('gratitudeJournal')) || {};
     document.getElementById('journalInput').value = savedData[day] || "";
+    checkTimer(); // 切換天數時也檢查一次
 }
 
-// 核心功能：檢查時間限制
 function checkTimer() {
     const lastSavedTime = localStorage.getItem('lastSavedTime');
     const saveBtn = document.getElementById('saveBtn');
     const timerMsg = document.getElementById('timerMessage');
+    const savedData = JSON.parse(localStorage.getItem('gratitudeJournal')) || {};
+
+    // 如果這一天已經寫過了，不鎖定按鈕（允許修改）
+    if (savedData[currentDay]) {
+        saveBtn.disabled = false;
+        saveBtn.style.backgroundColor = "#B1B479";
+        timerMsg.innerText = "今日已完成，你可以修改內容。";
+        return true;
+    }
 
     if (lastSavedTime) {
         const now = Date.now();
@@ -97,10 +54,11 @@ function checkTimer() {
             
             saveBtn.disabled = true;
             saveBtn.style.backgroundColor = "#ccc";
-            timerMsg.innerText = `休息一下，還需等待 ${hoursLeft} 小時 ${minsLeft} 分鐘才能寫下一篇。`;
+            timerMsg.innerText = `休息一下，還需等待 ${hoursLeft} 小時 ${minsLeft} 分鐘才能解鎖新拼圖。`;
             return false;
         }
     }
+    
     saveBtn.disabled = false;
     saveBtn.style.backgroundColor = "#B1B479";
     timerMsg.innerText = "";
@@ -108,8 +66,6 @@ function checkTimer() {
 }
 
 function saveEntry() {
-    if (!checkTimer()) return; 
-
     const text = document.getElementById('journalInput').value.trim();
     if (!text) {
         alert("請寫下一些感恩的話吧！");
@@ -118,6 +74,7 @@ function saveEntry() {
 
     let savedData = JSON.parse(localStorage.getItem('gratitudeJournal')) || {};
     
+    // 如果是新解鎖的一天，紀錄時間
     if (!savedData[currentDay]) {
         localStorage.setItem('lastSavedTime', Date.now());
     }
