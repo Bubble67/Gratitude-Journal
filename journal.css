@@ -1,4 +1,4 @@
-/* style.css */
+/* journal.css */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #fdf6e3;
@@ -17,41 +17,41 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-/* 拼圖板塊 */
+/* 拼圖板塊：修正為 4 欄，確保位置正確 */
 .puzzle-board {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(4, 100px); 
     gap: 10px;
-    margin: 30px 0;
-    min-height: 150px;
-}
-
-.puzzle-piece {
-    background: #eee;
-    height: 80px;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    color: #ccc;
+    margin: 20px auto;
+}
+
+.piece {
+    width: 100px;
+    height: 100px;
+    background-color: #91989F; /* 未解鎖顏色 */
+    background-size: 400px 200px; /* 圖片總大小 */
     transition: all 0.5s ease;
-    border: 2px dashed #ddd;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
-.puzzle-piece.unlocked {
-    background: #ffcc00;
-    color: #333;
-    border: 2px solid #ffa500;
-    transform: scale(1.05);
+.piece.unlocked {
+    background-image: url('puzzle.jpg');
+    background-color: transparent;
+    border: none;
 }
 
-/* 輸入區 */
-.journal-section {
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-}
+/* 每一塊碎片的座標設定 */
+#piece-1.unlocked { background-position: 0 0; }
+#piece-2.unlocked { background-position: -100px 0; }
+#piece-3.unlocked { background-position: -200px 0; }
+#piece-4.unlocked { background-position: -300px 0; }
+#piece-5.unlocked { background-position: 0 -100px; }
+#piece-6.unlocked { background-position: -100px -100px; }
+#piece-7.unlocked { background-position: -200px -100px; }
 
+/* 其他介面樣式 */
 .day-selector button {
     margin: 5px;
     padding: 8px 12px;
@@ -87,40 +87,5 @@ textarea {
     color: #d35400;
     animation: fadeIn 2s;
 }
-
-/* style.css */
-.puzzle-board {
-    display: grid;
-    grid-template-columns: repeat(4, 100px); 
-    grid-template-rows: repeat(2, 100px); 
-    gap: 2px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.piece {
-    width: 100px;
-    height: 100px;
-    background-color: #91989F; /*視覺呈現未解鎖*/
-    background-image: none;
-    background-size: 400px 200px; 
-    transition: all 0.5s ease;
-    border: 1px solid #ddd;
-}
-
-/*解鎖時顯示圖片*/
-.piece.unlocked {
-    background-image: url('puzzle.jpg');
-    border: none;
-}
-
-/* 設定每一塊碎片對應圖片的座標 */
-#piece-1.unlocked { background-position: 0 0; }
-#piece-2.unlocked { background-position: -100px 0; }
-#piece-3.unlocked { background-position: -200px 0; }
-#piece-4.unlocked { background-position: -300px 0; }
-#piece-5.unlocked { background-position: 0 -100px; }
-#piece-6.unlocked { background-position: -100px -100px; }
-#piece-7.unlocked { background-position: -200px -100px; }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
