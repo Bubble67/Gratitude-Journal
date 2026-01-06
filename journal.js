@@ -141,3 +141,57 @@ function resetJournal() {
         location.reload(); 
     }
 }
+//開發者模式
+let clickCount = 0;
+let lastClickTime = 0;
+
+// 監聽
+const originalOnload = window.onload;
+window.onload = function() {
+    if (originalOnload) originalOnload(); // 執行原本的載入邏輯
+    
+    const trigger = document.getElementById('secretTrigger');
+    if (trigger) {
+        trigger.addEventListener('click', () => {
+            const currentTime = Date.now();
+            if (currentTime - lastClickTime > 1000) {
+                clickCount = 0;
+            }
+            
+            clickCount++;
+            lastClickTime = currentTime;
+
+            if (clickCount === 7) {
+                activateDevMode();
+                clickCount = 0; // 重置計數
+            }
+        });
+    }
+};
+
+// 開發者模式的核心函式
+function activateDevMode() {
+    console.log("🛠️ 開發者模式已啟動：解鎖所有拼圖");
+
+    let debugData = {};
+    for (let i = 1; i <= 7; i++) {
+        debugData[i] = "這是開發者模式生成的測試感恩內容！✨";
+    }
+
+    // 2. 存入 localStorage
+    localStorage.setItem('gratitudeJournal', JSON.stringify(debugData));
+    
+    // 3. 移除時間限制 (設為很久以前的時間)
+    localStorage.setItem('lastSavedTime', Date.now() - TWENTY_FOUR_HOURS);
+
+    // 4. 立即重新渲染畫面
+    renderPuzzle();
+    updateTimerDisplay();
+    
+    // 5. 觸發慶祝特效！
+    if (typeof fireworkCelebration === "function") {
+        fireworkCelebration();
+    }
+
+    alert("🛠️ 開發者模式：已完成所有天數並解鎖拼圖！");
+}
