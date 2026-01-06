@@ -175,7 +175,7 @@ function activateDevMode() {
 
     let debugData = {};
     for (let i = 1; i <= 7; i++) {
-        debugData[i] = "這裡是開發者留下的一些話";
+        debugData[i] = "這裡是開發者留下的一些話！\n最重要的，感恩你願意和我們一同練習感恩，\n希望這個小小的習慣，能讓你在往後的日常，\n以更正向的心境看待生活，祝你早午晚都安。";
     }
 
     // 2. 存入 localStorage
