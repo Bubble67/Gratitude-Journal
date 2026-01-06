@@ -37,7 +37,7 @@ body {
 }
 
 .piece.unlocked {
-    background-image: url('puzzle.jpg');
+    background-image: url('puzzle(1).png');
     background-color: transparent;
     border: none;
 }
@@ -87,5 +87,6 @@ textarea {
     color: #d35400;
     animation: fadeIn 2s;
 }
+
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
