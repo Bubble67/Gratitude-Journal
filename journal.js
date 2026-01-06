@@ -90,7 +90,9 @@ function saveEntry() {
 function renderPuzzle() {
     const savedData = JSON.parse(localStorage.getItem('gratitudeJournal')) || {};
     let completedCount = 0;
+    const board = document.getElementById('puzzleBoard');
 
+    // 處理前 7 塊
     for (let i = 1; i <= totalDays; i++) {
         const piece = document.getElementById(`piece-${i}`);
         if (savedData[i]) {
@@ -101,8 +103,16 @@ function renderPuzzle() {
         }
     }
 
-    if (completedCount === totalDays) {
+    // --- 關鍵邏輯：第 7 天解鎖時，同時解鎖第 8 塊 ---
+    const piece8 = document.getElementById('piece-8');
+    if (savedData[7]) {
+        piece8.classList.add('unlocked');
+        board.classList.add('completed'); // 啟動無縫合併
         document.getElementById('quoteDisplay').style.display = "block";
+    } else {
+        piece8.classList.remove('unlocked');
+        board.classList.remove('completed'); // 還原縫隙
+        document.getElementById('quoteDisplay').style.display = "none";
     }
 }
 
