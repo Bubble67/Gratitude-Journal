@@ -31,10 +31,20 @@
                 <button onclick="selectDay(6)">Day 6</button>
                 <button onclick="selectDay(7)">Day 7</button>
             </div>
+        
+        <div class="journal-section">
+            <button class="save-btn" id="saveBtn" onclick="saveEntry()">儲存並領取拼圖</button>
+            <p id="timerMessage" style="color: #e74c3c; font-size: 0.9rem; margin-top: 5px;"></p>
+
+            <hr style="margin: 20px 0; border: 0.5px solid #eee;">
+            <button onclick="resetJournal()" style="background: none; border: none; color: #999; cursor: pointer; text-decoration: underline;">
+                開啟新一週的感恩練習！
+            </button>
+        </div>
 
             <h3 id="currentDayTitle">正在完成：本週第 1 篇感恩日記</h3>
             <p id="promptDisplay" style="color: #666; font-style: italic; margin-bottom: 10px;"></p>
-            <textarea id="journalInput" placeholder="今天發生了什麼值得感謝的事呢？"></textarea>
+            <textarea id="journalInput" placeholder="今天發生了什麼值得感恩的事呢？"></textarea>
             <br>
             <button class="save-btn" onclick="saveEntry()">儲存並領取拼圖</button>
         </div>
